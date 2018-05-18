@@ -5,6 +5,8 @@ require 'sinatra/json'
 require 'sinatra/reloader' if development?
 require 'resolv'
 
+set :protection, except: [:json_csrf]
+
 get '/' do
   ip = request.ip
   info = {
