@@ -11,9 +11,15 @@ get "/" do
   ip = request.ip
   info = {
     ip: ip,
-    host: Resolv.getname(ip),
+    host: getname(ip),
     v6: IPAddr.new(ip).ipv6?,
     user_agent: request.user_agent,
   }
   json info
+end
+
+def getname(ip)
+  Resolv.getname(ip)
+rescue Resolv::ResolvError
+  nil
 end

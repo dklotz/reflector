@@ -22,6 +22,17 @@ describe "reflector application" do
     expect(json_response["host"]).to eq("localhost")
   end
 
+  context "when the host name could not be resolved" do
+    before do
+      expect(Resolv).to receive(:getname).and_raise(Resolv::ResolvError, "no name")
+    end
+
+    it "returns nil for the host name" do
+      get "/"
+      expect(json_response["host"]).to be_nil
+    end
+  end
+
   it "returns whether we are using IPv6" do
     get "/"
     expect(json_response["v6"]).to eq(false)
