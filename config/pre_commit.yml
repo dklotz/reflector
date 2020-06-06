@@ -1,0 +1,6 @@
+---
+:checks_remove:
+  - :rails
+:checks_add:
+  - :rspec_focus
+  - :ruby

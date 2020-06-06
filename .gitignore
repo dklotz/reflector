@@ -1,4 +1,7 @@
 **.orig
 .byebug_history
 
-!/**/.gitkeep
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
