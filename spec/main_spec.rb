@@ -17,6 +17,20 @@ describe "reflector application" do
     expect(json_response["ip"]).to eq("127.0.0.1")
   end
 
+  context "when the request is forwarded by Google's proxy" do
+    let(:proxy_address) { "169.254.8.129" }
+    let(:real_address) { "2a02:807:520:fd70:e94b:8430:6723:a3fa" }
+
+    it "still returns the correct client IP address" do
+      env "REMOTE_ADDR", proxy_address
+      header "X-Forwarded-For", real_address
+
+      get "/"
+
+      expect(json_response["ip"]).to eq(real_address)
+    end
+  end
+
   it "returns the client host name" do
     get "/"
     expect(json_response["host"]).to eq("localhost")
@@ -39,7 +53,14 @@ describe "reflector application" do
   end
 
   it "returns the client user agent" do
+    header "User-Agent", "FooBar/1.2.3"
     get "/"
-    expect(json_response).to have_key("user_agent") # rack-test doesn't send a user agent
+    expect(json_response["user_agent"]).to eq("FooBar/1.2.3")
+  end
+
+  it "returns request headers" do
+    header "Accept-Charset", "utf-8"
+    get "/"
+    expect(json_response["headers"]).to include("Accept-Charset" => "utf-8")
   end
 end
