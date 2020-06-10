@@ -22,8 +22,8 @@ end
 # Tries to resolve IP to hostname, returns nil on resolve errors.
 def resolve(ip)
   Resolv.getname(ip)
-rescue Resolv::ResolvError
-  nil
+#rescue Resolv::ResolvError # TODO: enable again
+#  nil
 end
 
 # Rack mangles headers, so e.g. 'Accept-Charset' becomes 'HTTP_ACCEPT_CHARSET'.
