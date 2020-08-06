@@ -1,0 +1,45 @@
+# Workflow for general CI tasks like running tests and audits
+name: CI
+
+on: push
+
+env:
+  PRECOMMIT: "false"
+
+jobs:
+  # Run ruby audit to check for vulnerabilities in used ruby version
+  ruby-audit:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+    - name: install gem
+      run: gem install ruby_audit
+    - name: ruby audit # Use custom binstub as running `ruby-audit check` requires bundle install
+      run: bin/ruby-audit
+  # Run bundle-audit to check for used gem versions with known security vulnerabilities
+  bundle-audit:
+    runs-on: ubuntu-18.04
+    timeout-minutes: 5
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+    - name: install gem
+      run: gem install bundler-audit
+    - name: bundle audit
+      run: bundle audit check --update
+  # Run all ruby specs with rspec
+  rspec:
+    name: Ruby Tests
+    runs-on: ubuntu-18.04
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true # Automatically runs bundle install and caches the gems
+    - name: Check rake tasks can be loaded
+      run: bin/rake -T
+    - name: Run specs
+      run: bin/rspec --format progress
