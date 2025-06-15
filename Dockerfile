@@ -1,4 +1,4 @@
-FROM ruby:2.6.6-slim
+FROM ruby:2.7.8-slim
 
 # Install system libraries
 RUN apt-get update -qq && \
@@ -7,11 +7,11 @@ RUN apt-get update -qq && \
 # 'deployment' means (among others) bundling to vendor/bundle and throwing errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global deployment 'true'
 
-ENV APPLICATION_USER sinatra
-ENV LANG C.UTF-8
-ENV BUNDLE_WITHOUT "development test"
-ENV PORT 4567
-ENV RACK_ENV production
+ENV APPLICATION_USER=sinatra
+ENV LANG=C.UTF-8
+ENV BUNDLE_WITHOUT="development test"
+ENV PORT=4567
+ENV RACK_ENV=production
 
 RUN useradd -ms /bin/bash ${APPLICATION_USER}
 WORKDIR /usr/src/app
@@ -19,7 +19,7 @@ RUN chown -R ${APPLICATION_USER}:${APPLICATION_USER} /usr/src/app
 
 USER $APPLICATION_USER
 
-RUN gem install bundler
+RUN gem install bundler -v 2.4.22
 
 COPY Gemfile Gemfile.lock .ruby-version ./
 RUN bundle install
