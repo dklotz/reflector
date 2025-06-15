@@ -9,7 +9,7 @@ env:
 jobs:
   # Run ruby audit to check for vulnerabilities in used ruby version
   ruby-audit:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
       run: bin/ruby-audit
   # Run bundle-audit to check for used gem versions with known security vulnerabilities
   bundle-audit:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
     - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
   # Run all ruby specs with rspec
   rspec:
     name: Ruby Tests
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
     - uses: actions/checkout@v2
