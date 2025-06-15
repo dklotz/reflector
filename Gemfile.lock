@@ -30,7 +30,7 @@ GEM
     pry-doc (1.1.0)
       pry (~> 0.11)
       yard (~> 0.9.11)
-    puma (4.3.5)
+    puma (4.3.12)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-protection (2.0.8.1)
@@ -111,7 +111,7 @@ DEPENDENCIES
   sinatra-contrib
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.7.8p225
 
 BUNDLED WITH
-   2.1.4
+   2.4.22
