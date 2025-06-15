@@ -1,4 +1,4 @@
-FROM ruby:2.7.8-slim
+FROM ruby:3.4.3-slim
 
 # Install system libraries
 RUN apt-get update -qq && \
@@ -19,7 +19,7 @@ RUN chown -R ${APPLICATION_USER}:${APPLICATION_USER} /usr/src/app
 
 USER $APPLICATION_USER
 
-RUN gem install bundler -v 2.4.22
+RUN gem install bundler
 
 COPY Gemfile Gemfile.lock .ruby-version ./
 RUN bundle install
