@@ -6,6 +6,7 @@ You can use it to answer questions like:
 - What is my public facing IP (and hostname)?
 - Is my request coming in using IPv6?
 - What's the User-Agent in my request?
+- What headers is the proxy in front of my application adding?
 
 You can deploy this anywhere you can run Rack applications (e.g. Heroku, GCR or anywhere you can deploy docker containers) and use it e.g. to debug connection issues. At least that's what I use it for, YMMV.
 
@@ -41,5 +42,5 @@ Response (just the JSON):
 You can try out a live version here (currently deployed to GCR):
 
 ```
-http -v GET https://reflector.klotz.io
+http -v GET https://reflector.koerdt.dev
 ```
